@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Menu, X, Globe, Moon, Sun, ArrowUpRight, Search, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Menu, X, Globe, Moon, Sun, Radio, Search, ChevronRight, ChevronLeft, Facebook, Twitter, Youtube, Instagram, Calendar } from 'lucide-react';
 import { mockNews, mockPrograms } from '../constants';
 
 export const Header: React.FC = () => {
@@ -10,6 +10,12 @@ export const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isDark, setIsDark] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentDate(new Date()), 60000); // Update every minute
+    return () => clearInterval(timer);
+  }, []);
 
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -28,6 +34,23 @@ export const Header: React.FC = () => {
     }
     return () => { document.body.style.overflow = 'unset'; };
   }, [isSearchOpen]);
+
+  const formatDate = () => {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    };
+    return currentDate.toLocaleDateString(language === 'en' ? 'en-US' : 'ar-EG', options);
+  };
+
+  const formatTime = () => {
+    return currentDate.toLocaleTimeString(language === 'en' ? 'en-US' : 'ar-EG', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
 
   const navLinks = [
     { path: '/', label: t.nav.home },
@@ -56,159 +79,195 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/95 dark:bg-dark-800/95 backdrop-blur-sm border-b border-gray-200 dark:border-dark-700 shadow-sm">
-        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
-            {/* Logo */}
-            <div className="flex-shrink-0 flex items-center min-w-0">
-              <NavLink to="/" className="flex items-center gap-1.5 sm:gap-2 md:gap-3 group">
-                <div className="bg-primary-600 text-accent-500 p-1.5 sm:p-2 rounded-md sm:rounded-lg group-hover:bg-primary-700 transition-colors shadow-sm flex-shrink-0">
-                  <ArrowUpRight size={18} className="sm:hidden" strokeWidth={3} />
-                  <ArrowUpRight size={24} className="hidden sm:block md:hidden" strokeWidth={3} />
-                  <ArrowUpRight size={28} className="hidden md:block" strokeWidth={3} />
+      <header className="sticky top-0 z-50 bg-white dark:bg-dark-900 shadow-md">
+        {/* Utility Bar - Date, Time, Socials */}
+        <div className="bg-black text-white border-b border-gray-800">
+          <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-8 text-xs">
+              {/* Date & Time */}
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-1.5">
+                  <Calendar size={12} />
+                  <span className="hidden sm:inline font-medium">{formatDate()}</span>
+                  <span className="sm:hidden font-medium">{formatTime()}</span>
                 </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl tracking-tight leading-none text-gray-900 dark:text-white">
-                    {language === 'en' ? 'ALETEJAH' : 'الاتجاه'}
-                  </span>
-                  <span className="text-[0.5rem] xs:text-[0.55rem] sm:text-[0.6rem] md:text-[0.65rem] font-bold text-primary-600 dark:text-accent-500 tracking-wider uppercase hidden xs:block truncate">
-                    {language === 'en' ? 'One Direction' : 'للحقيقة اتجاه'}
-                  </span>
+                <div className="hidden md:flex items-center gap-1.5 text-gray-400">
+                  <span className="font-medium">{formatTime()}</span>
                 </div>
-              </NavLink>
-            </div>
+              </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8 rtl:space-x-reverse">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'text-primary-600 dark:text-primary-400'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
-                    }`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-            </nav>
-
-            {/* Actions */}
-            <div className="hidden md:flex items-center space-x-4 rtl:space-x-reverse">
-               <button
-                onClick={() => setIsSearchOpen(true)}
-                className="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
-                aria-label="Search"
-              >
-                <Search size={20} />
-              </button>
-               <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
-                aria-label="Toggle Theme"
-              >
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 dark:border-dark-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-700 transition-colors"
-              >
-                <Globe size={16} />
-                <span>{language === 'en' ? 'العربية' : 'English'}</span>
-              </button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-1 xs:gap-2 sm:gap-3">
-               <button
-                onClick={() => setIsSearchOpen(true)}
-                className="p-1.5 sm:p-2 rounded-full text-gray-500 hover:text-primary-600 transition-colors flex-shrink-0"
-                aria-label="Search"
-              >
-                <Search size={18} />
-              </button>
-               <button
-                onClick={toggleTheme}
-                className="p-1.5 sm:p-2 rounded-full text-gray-500 hover:text-primary-600 transition-colors flex-shrink-0"
-                aria-label="Toggle Theme"
-              >
-                {isDark ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 dark:text-gray-200 hover:text-primary-600 transition-colors flex-shrink-0"
-                aria-label="Menu"
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
+              {/* Social Media Links */}
+              <div className="flex items-center gap-2 sm:gap-3">
+                <a href="#" className="hover:text-accent-500 transition-colors" aria-label="Facebook">
+                  <Facebook size={14} />
+                </a>
+                <a href="#" className="hover:text-accent-500 transition-colors" aria-label="Twitter">
+                  <Twitter size={14} />
+                </a>
+                <a href="#" className="hover:text-accent-500 transition-colors" aria-label="Youtube">
+                  <Youtube size={14} />
+                </a>
+                <a href="#" className="hover:text-accent-500 transition-colors hidden sm:inline" aria-label="Instagram">
+                  <Instagram size={14} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Main Navigation Bar */}
+        <div className="bg-white dark:bg-dark-900 border-b-2 border-primary-600">
+          <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-14 sm:h-16">
+              {/* Logo - Sharp & Bold */}
+              <div className="flex-shrink-0 flex items-center min-w-0">
+                <NavLink to="/" className="flex items-center gap-2 sm:gap-3 group">
+                  <div className="bg-primary-600 text-white p-2 sharp group-hover:bg-primary-700 transition-colors flex-shrink-0">
+                    <Radio size={20} className="sm:hidden" strokeWidth={2.5} />
+                    <Radio size={24} className="hidden sm:block" strokeWidth={2.5} />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-headline text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-none text-gray-900 dark:text-white">
+                      {language === 'en' ? 'ALETEJAH' : 'الاتجاه'}
+                    </span>
+                    <span className="text-[0.6rem] sm:text-[0.65rem] font-bold text-primary-600 dark:text-accent-500 tracking-widest uppercase hidden xs:block">
+                      {language === 'en' ? 'NEWS NETWORK' : 'شبكة الأخبار'}
+                    </span>
+                  </div>
+                </NavLink>
+              </div>
+
+              {/* Desktop Navigation - Sharp & Dense */}
+              <nav className="hidden lg:flex items-center gap-1">
+                {navLinks.map((link) => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    className={({ isActive }) =>
+                      `px-4 py-2 sharp font-headline text-sm font-semibold tracking-wide uppercase transition-all ${
+                        isActive
+                          ? 'bg-primary-600 text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-800'
+                      } ${link.path === '/live' ? 'live-indicator' : ''}`
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
+                ))}
+              </nav>
+
+              {/* Desktop Actions - Sharp Buttons */}
+              <div className="hidden lg:flex items-center gap-2">
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-2 sharp text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
+                  aria-label="Search"
+                >
+                  <Search size={18} />
+                </button>
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 sharp text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
+                  aria-label="Toggle Theme"
+                >
+                  {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 px-3 py-2 sharp font-headline text-xs font-semibold uppercase tracking-wide text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
+                >
+                  <Globe size={14} />
+                  <span>{language === 'en' ? 'عربي' : 'EN'}</span>
+                </button>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <div className="lg:hidden flex items-center gap-2">
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-2 sharp text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
+                  aria-label="Search"
+                >
+                  <Search size={18} />
+                </button>
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 sharp text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
+                  aria-label="Toggle Theme"
+                >
+                  {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="p-2 sharp text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
+                  aria-label="Menu"
+                >
+                  {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu - Sharp Design */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-dark-800 border-t border-gray-200 dark:border-dark-700 shadow-lg">
-            <div className="px-3 xs:px-4 sm:px-6 pt-3 pb-4 space-y-2">
+          <div className="lg:hidden bg-white dark:bg-dark-900 border-t-2 border-primary-600 shadow-lg">
+            <div className="px-3 xs:px-4 sm:px-6 py-3 space-y-1">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
                   className={({ isActive }) =>
-                    `block px-4 py-3 rounded-lg text-sm sm:text-base font-medium transition-colors ${
+                    `block px-4 py-3 sharp font-headline text-sm font-semibold uppercase tracking-wide transition-colors ${
                       isActive
                         ? 'bg-primary-600 text-white'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-800'
                     }`
                   }
                 >
                   {link.label}
                 </NavLink>
               ))}
-               <button
+              <button
                 onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
-                className="w-full text-start px-4 py-3 rounded-lg text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors flex items-center gap-2"
+                className="w-full text-start px-4 py-3 sharp font-headline text-sm font-semibold uppercase tracking-wide text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors flex items-center gap-2"
               >
                 <Globe size={16} />
-                {language === 'en' ? 'العربية' : 'English'}
+                {language === 'en' ? 'عربي' : 'EN'}
               </button>
             </div>
           </div>
         )}
       </header>
 
-      {/* Global Search Overlay */}
+      {/* Global Search Overlay - Sharp Design */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-[100] bg-white dark:bg-dark-900 animate-in fade-in duration-200 flex flex-col">
-           <div className="max-w-7xl mx-auto w-full px-3 xs:px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="fixed inset-0 z-[100] bg-white dark:bg-dark-900 flex flex-col">
+           <div className="max-w-7xl mx-auto w-full px-3 xs:px-4 sm:px-6 lg:px-8 py-6">
               {/* Overlay Header */}
-              <div className="flex justify-between items-center mb-4 sm:mb-6 md:mb-8">
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white">{t.search.placeholder}</h2>
+              <div className="flex justify-between items-center mb-6 border-b-2 border-primary-600 pb-4">
+                  <h2 className="font-headline text-2xl sm:text-3xl font-bold uppercase tracking-wide text-gray-900 dark:text-white">{t.search.placeholder}</h2>
                   <button
                     onClick={() => setIsSearchOpen(false)}
-                    className="p-2 bg-gray-100 dark:bg-dark-700 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors"
+                    className="p-2 sharp bg-black text-white hover:bg-gray-800 transition-colors"
                     aria-label="Close search"
                   >
-                    <X size={20} className="sm:hidden" />
-                    <X size={24} className="hidden sm:block" />
+                    <X size={24} />
                   </button>
               </div>
 
               {/* Search Input */}
-              <div className="relative mb-12">
-                 <input 
+              <div className="relative mb-8">
+                 <input
                     autoFocus
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={t.search.typeToSearch}
-                    className="w-full text-3xl md:text-5xl font-bold bg-transparent border-b-2 border-gray-200 dark:border-dark-700 pb-4 focus:outline-none focus:border-primary-600 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-dark-600"
+                    className="w-full text-2xl sm:text-3xl md:text-4xl font-headline font-bold uppercase bg-transparent border-b-2 border-gray-300 dark:border-dark-700 pb-4 focus:outline-none focus:border-primary-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-dark-600"
                  />
-                 <Search className="absolute right-0 rtl:left-0 rtl:right-auto top-2 text-gray-400" size={40} />
+                 <Search className="absolute right-0 rtl:left-0 rtl:right-auto top-2 text-gray-400" size={32} />
               </div>
 
               {/* Results */}

@@ -106,38 +106,38 @@ export const ProgramDetails: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-900 pb-12 sm:pb-16">
-      {/* Hero Header */}
-      <div className="relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] w-full overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-black pb-12 sm:pb-16">
+      {/* Hero Header - Sharp Professional Design */}
+      <div className="relative h-[350px] sm:h-[400px] md:h-[450px] lg:h-[550px] w-full overflow-hidden sharp">
         <img
           src={program.image}
           alt={program.title[language]}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
 
-        <div className="absolute inset-0 flex flex-col justify-end pb-6 sm:pb-8 md:pb-12">
+        <div className="absolute inset-0 flex flex-col justify-end pb-8 sm:pb-10 md:pb-12">
             <div className="max-w-7xl mx-auto w-full px-3 xs:px-4 sm:px-6 lg:px-8">
-                <Link to="/programs" className="inline-flex items-center text-gray-300 hover:text-white mb-6 transition-colors">
+                <Link to="/programs" className="inline-flex items-center text-gray-300 hover:text-white mb-6 transition-colors font-bold uppercase text-sm tracking-wider">
                     <BackIcon size={20} className="me-2" />
                     {t.programDetails.back}
                 </Link>
-                <span className="inline-block bg-primary-600 text-white text-sm font-bold px-3 py-1 rounded mb-4">
+                <div className="category-label mb-4 inline-block">
                     {program.category}
-                </span>
-                <h1 className="text-4xl lg:text-6xl font-bold text-white mb-4">{program.title[language]}</h1>
-                <div className="flex flex-wrap items-center gap-6 text-gray-300 text-sm lg:text-base">
-                    <span className="flex items-center gap-2">
-                        <User size={18} className="text-primary-500" />
-                        {t.programDetails.host}: <span className="text-white font-medium">{program.host[language]}</span>
+                </div>
+                <h1 className="font-headline text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase text-white mb-6 dense high-contrast">{program.title[language]}</h1>
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-gray-300 text-xs sm:text-sm">
+                    <span className="flex items-center gap-2 bg-black/50 px-3 py-1.5 sharp">
+                        <User size={16} className="text-primary-500" />
+                        <span className="font-bold uppercase text-white">{program.host[language]}</span>
                     </span>
-                    <span className="flex items-center gap-2">
-                        <Clock size={18} className="text-primary-500" />
-                        20:00 GMT
+                    <span className="flex items-center gap-2 bg-black/50 px-3 py-1.5 sharp">
+                        <Clock size={16} className="text-primary-500" />
+                        <span className="font-bold text-white">20:00 GMT</span>
                     </span>
-                    <span className="flex items-center gap-2">
-                        <Timer size={18} className="text-primary-500" />
-                        {t.programDetails.duration}: <span className="text-white font-medium">{program.duration}</span>
+                    <span className="flex items-center gap-2 bg-black/50 px-3 py-1.5 sharp">
+                        <Timer size={16} className="text-primary-500" />
+                        <span className="font-bold text-white">{program.duration}</span>
                     </span>
                 </div>
             </div>
@@ -149,25 +149,25 @@ export const ProgramDetails: React.FC = () => {
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-10">
                 
-                {/* Active Video Player Section */}
+                {/* Active Video Player Section - Sharp Design */}
                 {selectedEpisode && (
-                   <div ref={playerRef} className="animate-in slide-in-from-top-4 duration-500 mb-10 rounded-xl overflow-hidden shadow-2xl border border-gray-200 dark:border-dark-700 bg-black">
+                   <div ref={playerRef} className="animate-in slide-in-from-top-4 duration-500 mb-10 sharp overflow-hidden border-2 border-gray-800 bg-black">
                       <VideoPlayer src={selectedEpisode.videoUrl} />
-                      <div className="p-4 bg-white dark:bg-dark-800 border-t border-gray-100 dark:border-dark-700">
+                      <div className="p-4 sm:p-5 bg-gray-900 dark:bg-dark-900 border-t-2 border-gray-800">
                          <div className="flex items-center justify-between">
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                               {t.live.nowPlaying}: {selectedEpisode.title[language]}
+                            <h3 className="font-headline text-base sm:text-lg font-bold uppercase text-white flex items-center gap-2">
+                               <div className="live-indicator"></div>
+                               {selectedEpisode.title[language]}
                             </h3>
                          </div>
                       </div>
                    </div>
                 )}
 
-                {/* Description Card */}
-                <div className="bg-white dark:bg-dark-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-dark-700">
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t.programDetails.about}</h2>
+                {/* Description Card - Sharp Professional Design */}
+                <div className="bg-gray-50 dark:bg-dark-900 p-6 sm:p-8 sharp border-2 border-gray-200 dark:border-gray-800">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 pb-4 border-b-2 border-primary-600">
+                        <h2 className="font-headline text-2xl sm:text-3xl font-bold uppercase text-gray-900 dark:text-white">{t.programDetails.about}</h2>
                         
                         {/* Main Program Share Buttons */}
                         <div className="flex items-center gap-2 bg-gray-50 dark:bg-dark-700/50 p-1.5 rounded-full border border-gray-100 dark:border-dark-600">
@@ -232,47 +232,48 @@ export const ProgramDetails: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Episodes Section */}
+                {/* Episodes Section - Dense Professional Grid */}
                 <div>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 border-s-4 border-primary-500 ps-4">
-                        {t.programDetails.episodes}
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="mb-6 pb-3 border-b-2 border-primary-600">
+                        <h2 className="font-headline text-2xl sm:text-3xl font-bold uppercase text-gray-900 dark:text-white">
+                            {t.programDetails.episodes}
+                        </h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {episodes.length > 0 ? (
                             episodes.map((ep) => {
                                 const isPlaying = selectedEpisode?.id === ep.id;
                                 return (
-                                    <div 
-                                        key={ep.id} 
+                                    <div
+                                        key={ep.id}
                                         onClick={() => handleEpisodeClick(ep)}
-                                        className={`bg-white dark:bg-dark-800 rounded-lg overflow-hidden shadow-sm border transition-all group cursor-pointer flex flex-col ${
-                                            isPlaying 
-                                            ? 'ring-2 ring-primary-500 border-primary-500' 
-                                            : 'border-gray-100 dark:border-dark-700 hover:shadow-md'
+                                        className={`bg-gray-50 dark:bg-dark-900 sharp overflow-hidden border-2 transition-all group cursor-pointer flex flex-col ${
+                                            isPlaying
+                                            ? 'border-primary-600'
+                                            : 'border-gray-200 dark:border-gray-800 hover:border-primary-600'
                                         }`}
                                     >
                                         <div className="relative aspect-video">
-                                            <img src={ep.thumbnail} alt={ep.title[language]} className="w-full h-full object-cover" />
+                                            <img src={ep.thumbnail} alt={ep.title[language]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                             <div className={`absolute inset-0 transition-colors flex items-center justify-center ${isPlaying ? 'bg-black/40' : 'bg-black/30 group-hover:bg-black/50'}`}>
-                                                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-transform ${isPlaying ? 'bg-primary-600 text-white' : 'bg-white/90 text-primary-600 group-hover:scale-110'}`}>
-                                                    <Play fill="currentColor" size={20} className="ml-1" />
+                                                <div className={`w-14 h-14 sharp flex items-center justify-center transition-transform ${isPlaying ? 'bg-primary-600 text-white' : 'bg-white text-primary-600 group-hover:scale-110'}`}>
+                                                    <Play fill="currentColor" size={24} className="ml-1" />
                                                 </div>
                                             </div>
-                                            <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-0.5 rounded">
+                                            <span className="absolute bottom-2 right-2 bg-black text-white text-xs font-bold px-2 py-1 sharp">
                                                 {ep.duration}
                                             </span>
                                             {isPlaying && (
-                                                <span className="absolute top-2 left-2 bg-primary-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                                <div className="absolute top-2 left-2 live-indicator bg-primary-600 text-white text-xs font-bold px-3 py-1 sharp">
                                                     PLAYING
-                                                </span>
+                                                </div>
                                             )}
                                         </div>
                                         <div className="p-4 flex-1 flex flex-col">
-                                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-2">
-                                                <Calendar size={12} className="me-1" />
+                                            <div className="timestamp text-[0.65rem] mb-2">
                                                 {ep.date}
                                             </div>
-                                            <h3 className={`font-bold line-clamp-2 transition-colors mb-4 ${isPlaying ? 'text-primary-600' : 'text-gray-900 dark:text-white group-hover:text-primary-600'}`}>
+                                            <h3 className={`font-headline text-base sm:text-lg font-bold uppercase dense line-clamp-2 transition-colors mb-4 ${isPlaying ? 'text-primary-600' : 'text-gray-900 dark:text-white group-hover:text-primary-600'}`}>
                                                 {ep.title[language]}
                                             </h3>
                                             

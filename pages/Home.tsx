@@ -6,95 +6,129 @@ import { Play, Clock, ChevronRight, ChevronLeft, Radio, Calendar, ArrowRight, Ar
 
 export const Home: React.FC = () => {
   const { t, language, dir } = useLanguage();
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % mockNews.length);
-        setIsAnimating(false);
-      }, 500); // Half of the transition duration
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const featuredNews = mockNews[currentSlide];
   const ArrowIcon = dir === 'rtl' ? ChevronLeft : ChevronRight;
   const DirectionArrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
-  // Mock Data Slices
+  // Mock Data Slices for Mosaic Grid
+  const mainStory = mockNews[0];
+  const sideStories = mockNews.slice(1, 4);
   const upNext = mockSchedule.slice(1, 3);
   const trendingEpisodes = mockEpisodes.slice(0, 4);
 
   return (
-    <div className="min-h-screen pb-0 w-full max-w-full">
-      {/* Hero Section */}
-      <section className="relative h-[350px] xs:h-[400px] sm:h-[450px] md:h-[550px] lg:h-[600px] bg-dark-900 text-white overflow-hidden group">
-        {/* Background Image with Fade Transition */}
-        <div className={`absolute inset-0 transition-opacity duration-1000 ${isAnimating ? 'opacity-50' : 'opacity-100'}`}>
-           <img
-            src={featuredNews.image}
-            alt="Hero Background"
-            className="w-full h-full object-cover opacity-40 transition-transform duration-[10000ms] ease-linear scale-105 group-hover:scale-110"
-          />
-        </div>
-
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/60 to-transparent"></div>
-
-        <div className="relative h-full max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
-          <div className={`max-w-2xl transition-all duration-700 transform ${isAnimating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}>
-            <span className="inline-block bg-primary-600 text-white text-[0.7rem] xs:text-xs sm:text-sm font-bold px-2 xs:px-2.5 sm:px-3 py-0.5 xs:py-1 rounded-full mb-2 xs:mb-3 sm:mb-4">
-              {featuredNews.category}
-            </span>
-            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-3 xs:mb-4 sm:mb-6">
-              {featuredNews.title[language]}
-            </h1>
-            <p className="text-xs xs:text-sm sm:text-base md:text-lg text-gray-200 mb-4 xs:mb-5 sm:mb-6 md:mb-8 line-clamp-2 sm:line-clamp-3">
-              {featuredNews.summary[language]}
-            </p>
-            <div className="flex flex-col xs:flex-row gap-2 xs:gap-3 sm:gap-4">
-              <Link to="/live" className="bg-primary-600 hover:bg-primary-700 text-white px-4 xs:px-5 sm:px-6 py-2 xs:py-2.5 sm:py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-colors shadow-lg hover:shadow-primary-600/50 text-xs xs:text-sm sm:text-base">
-                <Play fill="currentColor" size={16} />
-                {t.hero.watchLive}
-              </Link>
-              <Link to={`/news`} className="bg-white/10 hover:bg-white/20 backdrop-blur text-white px-4 xs:px-5 sm:px-6 py-2 xs:py-2.5 sm:py-3 rounded-lg font-bold transition-colors text-center text-xs xs:text-sm sm:text-base">
-                {t.hero.readMore}
-              </Link>
+    <div className="min-h-screen pb-0 w-full max-w-full bg-gray-100 dark:bg-dark-900">
+      {/* Hero Mosaic Grid - Professional News Network Style */}
+      <section className="bg-black">
+        <div className="mosaic-grid h-[400px] sm:h-[500px] md:h-[600px]">
+          {/* Main Story - Large Left Panel */}
+          <Link
+            to={`/news`}
+            className="mosaic-main relative overflow-hidden group news-card"
+          >
+            <img
+              src={mainStory.image}
+              alt={mainStory.title[language]}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="news-card-overlay"></div>
+            <div className="absolute inset-0 p-4 sm:p-6 md:p-8 flex flex-col justify-end">
+              <div className="category-label mb-3">
+                {mainStory.category}
+              </div>
+              <h1 className="font-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase leading-tight mb-3 sm:mb-4 text-white high-contrast dense">
+                {mainStory.title[language]}
+              </h1>
+              <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-4 line-clamp-2 md:line-clamp-3 high-contrast">
+                {mainStory.summary[language]}
+              </p>
+              <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-300">
+                <span className="timestamp">{mainStory.date}</span>
+                <span>•</span>
+                <span className="font-semibold">{mainStory.author}</span>
+              </div>
             </div>
-          </div>
+          </Link>
 
-          {/* Slide Indicators */}
-          <div className="absolute bottom-3 xs:bottom-4 sm:bottom-6 md:bottom-8 left-3 right-3 xs:left-4 xs:right-4 flex justify-center gap-1.5 xs:gap-2">
-            {mockNews.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-0.5 xs:h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
-                  idx === currentSlide ? 'w-5 xs:w-6 sm:w-8 bg-accent-500' : 'w-1 xs:w-1.5 sm:w-2 bg-white/30 hover:bg-white/50'
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
+          {/* Side Story 1 */}
+          <Link
+            to={`/news`}
+            className="mosaic-side-1 relative overflow-hidden group news-card"
+          >
+            <img
+              src={sideStories[0].image}
+              alt={sideStories[0].title[language]}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="news-card-overlay"></div>
+            <div className="absolute inset-0 p-3 sm:p-4 md:p-5 flex flex-col justify-end">
+              <div className="category-label mb-2 text-[0.65rem]">
+                {sideStories[0].category}
+              </div>
+              <h2 className="font-headline text-base sm:text-lg md:text-xl lg:text-2xl font-bold uppercase leading-tight text-white high-contrast dense line-clamp-2">
+                {sideStories[0].title[language]}
+              </h2>
+              <span className="timestamp mt-2 hidden sm:block">{sideStories[0].date}</span>
+            </div>
+          </Link>
+
+          {/* Side Story 2 */}
+          <Link
+            to={`/news`}
+            className="mosaic-side-2 relative overflow-hidden group news-card"
+          >
+            <img
+              src={sideStories[1].image}
+              alt={sideStories[1].title[language]}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="news-card-overlay"></div>
+            <div className="absolute inset-0 p-3 sm:p-4 md:p-5 flex flex-col justify-end">
+              <div className="category-label mb-2 text-[0.65rem]">
+                {sideStories[1].category}
+              </div>
+              <h2 className="font-headline text-base sm:text-lg md:text-xl lg:text-2xl font-bold uppercase leading-tight text-white high-contrast dense line-clamp-2">
+                {sideStories[1].title[language]}
+              </h2>
+              <span className="timestamp mt-2 hidden sm:block">{sideStories[1].date}</span>
+            </div>
+          </Link>
+
+          {/* Side Story 3 */}
+          <Link
+            to={`/news`}
+            className="mosaic-side-3 relative overflow-hidden group news-card"
+          >
+            <img
+              src={sideStories[2].image}
+              alt={sideStories[2].title[language]}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="news-card-overlay"></div>
+            <div className="absolute inset-0 p-3 sm:p-4 md:p-5 flex flex-col justify-end">
+              <div className="category-label mb-2 text-[0.65rem]">
+                {sideStories[2].category}
+              </div>
+              <h2 className="font-headline text-base sm:text-lg md:text-xl lg:text-2xl font-bold uppercase leading-tight text-white high-contrast dense line-clamp-2">
+                {sideStories[2].title[language]}
+              </h2>
+              <span className="timestamp mt-2 hidden sm:block">{sideStories[2].date}</span>
+            </div>
+          </Link>
         </div>
       </section>
 
-      {/* On Air & Up Next Section */}
-      <section className="bg-dark-900 text-white py-6 xs:py-8 sm:py-12 border-t border-white/10">
+      {/* On Air & Up Next Section - Sharp Professional Design */}
+      <section className="bg-white dark:bg-dark-900 py-8 sm:py-12 border-t-4 border-primary-600">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
            <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
               {/* Current Program - Main Focus */}
               <div className="flex-1">
-                 <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                    <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-red-600"></span>
-                    </span>
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide uppercase text-primary-500">{t.hero.liveSectionTitle}</h2>
+                 <div className="flex items-center gap-3 mb-6 pb-3 border-b-2 border-red-600">
+                    <div className="live-indicator font-headline text-sm font-bold uppercase tracking-wider text-red-600">
+                      {t.hero.liveSectionTitle}
+                    </div>
                  </div>
-                 <div className="bg-dark-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-dark-700 hover:border-primary-900 transition-colors group">
+                 <div className="bg-black sharp p-5 sm:p-6 border-2 border-gray-800 hover:border-primary-600 transition-colors group">
                     <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center">
                        <div className="relative w-full sm:w-1/2 aspect-video rounded-lg overflow-hidden">
                           <img src="https://picsum.photos/800/450?random=99" alt="Live" className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
@@ -145,38 +179,43 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Latest News Grid */}
-      <section className="py-6 xs:py-8 sm:py-12 md:py-16 max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col xs:flex-row justify-between items-start xs:items-end gap-3 mb-6 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white border-s-4 border-primary-500 ps-3 sm:ps-4">
-            {t.news.title}
-          </h2>
-          <Link to="/news" className="text-sm sm:text-base text-primary-600 hover:text-primary-700 font-semibold flex items-center gap-1 group">
-            {t.hero.readMore} <ArrowIcon size={16} className="sm:hidden group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-            <ArrowIcon size={18} className="hidden sm:block group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-          </Link>
-        </div>
+      {/* Latest News Grid - Dense Professional Layout */}
+      <section className="py-8 sm:py-12 bg-gray-50 dark:bg-black border-t border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center mb-6 pb-3 border-b-2 border-primary-600">
+            <h2 className="font-headline text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-wide text-gray-900 dark:text-white">
+              {t.news.title}
+            </h2>
+            <Link to="/news" className="btn-sharp bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 text-xs sm:text-sm transition-colors">
+              {t.hero.readMore}
+            </Link>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {mockNews.map((news) => (
-            <div key={news.id} className="bg-white dark:bg-dark-800 rounded-lg sm:rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
-              <div className="aspect-w-16 aspect-h-9 relative h-40 sm:h-48 overflow-hidden">
-                <img src={news.image} alt={news.title[language]} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="p-4 sm:p-5 flex-1 flex flex-col">
-                <div className="flex justify-between items-center mb-2 text-xs text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold text-primary-600 text-[0.7rem] sm:text-xs">{news.category}</span>
-                    <span className="flex items-center gap-1 text-[0.7rem] sm:text-xs"><Clock size={11} className="sm:hidden" /><Clock size={12} className="hidden sm:block" /> {news.date}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            {mockNews.map((news) => (
+              <Link key={news.id} to="/news" className="news-card relative overflow-hidden group bg-white dark:bg-dark-900 sharp border border-gray-200 dark:border-gray-800 hover:border-primary-600 transition-all">
+                <div className="relative h-48 sm:h-56 overflow-hidden">
+                  <img src={news.image} alt={news.title[language]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute top-2 left-2">
+                    <span className="category-label text-[0.65rem]">{news.category}</span>
+                  </div>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-2 sm:mb-3 line-clamp-2 hover:text-primary-600 transition-colors cursor-pointer">
-                  {news.title[language]}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm line-clamp-2 sm:line-clamp-3 mb-3 sm:mb-4 flex-1">
-                  {news.summary[language]}
-                </p>
-              </div>
-            </div>
-          ))}
+                <div className="p-4">
+                  <h3 className="font-headline text-base sm:text-lg md:text-xl font-bold uppercase dense text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">
+                    {news.title[language]}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm line-clamp-2 mb-3">
+                    {news.summary[language]}
+                  </p>
+                  <div className="flex items-center gap-2 mt-auto">
+                    <span className="timestamp text-[0.65rem]">{news.date}</span>
+                    <span className="text-gray-400">•</span>
+                    <span className="text-[0.65rem] text-gray-500 dark:text-gray-400 font-semibold">{news.author}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

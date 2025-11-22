@@ -12,19 +12,21 @@ export const News: React.FC = () => {
     : mockNews.filter(n => n.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-900 py-4 xs:py-6 sm:py-8 md:py-12">
+    <div className="min-h-screen bg-white dark:bg-black py-6 sm:py-8 md:py-12">
       <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
 
-        <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 xs:mb-6 sm:mb-8">{t.news.title}</h1>
+        <div className="mb-6 pb-4 border-b-2 border-primary-600">
+          <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-wide text-gray-900 dark:text-white">{t.news.title}</h1>
+        </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-1.5 xs:gap-2 sm:gap-3 mb-4 xs:mb-6 sm:mb-8 md:mb-10">
+        {/* Filters - Sharp Design */}
+        <div className="flex flex-wrap gap-2 mb-8">
           <button
             onClick={() => setActiveCategory('All')}
-            className={`px-2.5 xs:px-3 sm:px-4 py-1 xs:py-1.5 sm:py-2 rounded-full text-[0.7rem] xs:text-xs sm:text-sm font-medium transition-colors ${
+            className={`btn-sharp px-4 py-2 text-xs sm:text-sm transition-colors ${
               activeCategory === 'All'
                 ? 'bg-primary-600 text-white'
-                : 'bg-white dark:bg-dark-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700'
+                : 'bg-gray-200 dark:bg-dark-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-dark-700'
             }`}
           >
             {t.programs.filterAll}
@@ -36,10 +38,10 @@ export const News: React.FC = () => {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(dataCategory)}
-                className={`px-2.5 xs:px-3 sm:px-4 py-1 xs:py-1.5 sm:py-2 rounded-full text-[0.7rem] xs:text-xs sm:text-sm font-medium transition-colors ${
+                className={`btn-sharp px-4 py-2 text-xs sm:text-sm transition-colors ${
                   activeCategory === dataCategory
                     ? 'bg-primary-600 text-white'
-                    : 'bg-white dark:bg-dark-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700'
+                    : 'bg-gray-200 dark:bg-dark-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-dark-700'
                 }`}
               >
                 {cat}
@@ -48,32 +50,31 @@ export const News: React.FC = () => {
           })}
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 xs:gap-4 sm:gap-6 md:gap-8">
+        {/* Dense News Grid - Professional Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {filteredNews.map((news) => (
-            <div key={news.id} className="bg-white dark:bg-dark-800 rounded-lg sm:rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-               <div className="relative h-40 xs:h-44 sm:h-48 md:h-52 overflow-hidden">
+            <div key={news.id} className="news-card bg-gray-50 dark:bg-dark-900 sharp border border-gray-200 dark:border-gray-800 overflow-hidden hover:border-primary-600 transition-all group">
+               <div className="relative h-48 sm:h-56 overflow-hidden">
                  <img
                     src={news.image}
                     alt={news.title[language]}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                  />
-                 <div className="absolute top-3 sm:top-4 left-3 sm:left-4 rtl:right-3 sm:rtl:right-4 rtl:left-auto">
-                    <span className="bg-primary-600 text-white text-[0.7rem] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
+                 <div className="absolute top-2 left-2">
+                    <span className="category-label text-[0.65rem]">
                         {news.category}
                     </span>
                  </div>
                </div>
-               <div className="p-4 sm:p-5 md:p-6">
-                   <div className="flex items-center text-gray-500 text-[0.7rem] sm:text-xs mb-2 sm:mb-3">
-                       <Clock size={12} className="me-1 sm:hidden" />
-                       <Clock size={14} className="me-1 hidden sm:block" />
-                       {news.date}
+               <div className="p-4">
+                   <div className="flex items-center justify-between mb-2">
+                       <span className="timestamp text-[0.65rem]">{news.date}</span>
+                       <span className="text-[0.65rem] text-gray-500 dark:text-gray-400 font-semibold">{news.author}</span>
                    </div>
-                   <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3 leading-snug group-hover:text-primary-600 transition-colors line-clamp-2">
+                   <h3 className="font-headline text-lg sm:text-xl font-bold uppercase dense text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">
                        {news.title[language]}
                    </h3>
-                   <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm line-clamp-2 sm:line-clamp-3">
+                   <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm line-clamp-2">
                        {news.summary[language]}
                    </p>
                </div>

@@ -38,11 +38,11 @@ export const Programs: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-900 py-4 xs:py-6 sm:py-8 md:py-12">
+    <div className="min-h-screen bg-white dark:bg-black py-6 sm:py-8 md:py-12">
       <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 xs:gap-4 mb-4 xs:mb-6 sm:mb-8 md:mb-10">
-            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{t.programs.title}</h1>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b-2 border-primary-600">
+            <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-wide text-gray-900 dark:text-white">{t.programs.title}</h1>
 
             <div className="relative w-full md:w-96" ref={searchContainerRef}>
                 <div className="relative">
@@ -52,32 +52,31 @@ export const Programs: React.FC = () => {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onFocus={() => setIsFocused(true)}
                       placeholder={t.programs.searchPlaceholder}
-                      className="w-full pl-8 xs:pl-9 sm:pl-10 pr-8 xs:pr-9 sm:pr-10 py-2 xs:py-2.5 sm:py-3 rounded-lg border border-gray-300 dark:border-dark-700 bg-white dark:bg-dark-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent shadow-sm text-xs xs:text-sm sm:text-base"
+                      className="w-full pl-9 sm:pl-10 pr-9 sm:pr-10 py-2.5 sm:py-3 sharp border-2 border-gray-300 dark:border-dark-700 bg-white dark:bg-dark-900 text-gray-900 dark:text-white focus:ring-0 focus:border-primary-600 text-xs xs:text-sm sm:text-base font-medium"
                   />
-                  <Search className="absolute left-2.5 xs:left-3 top-2 xs:top-2.5 sm:top-3.5 text-gray-400" size={16} />
+                  <Search className="absolute left-3 top-3 sm:top-3.5 text-gray-400" size={16} />
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery('')}
-                      className="absolute right-3 top-2.5 sm:top-3.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                      className="absolute right-3 top-3 sm:top-3.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
                     >
-                      <X size={16} className="sm:hidden" />
-                      <X size={18} className="hidden sm:block" />
+                      <X size={16} />
                     </button>
                   )}
                 </div>
 
-                {/* Auto-suggestions Dropdown */}
+                {/* Auto-suggestions Dropdown - Sharp Design */}
                 {isFocused && suggestions.length > 0 && (
-                  <div className="absolute z-10 w-full mt-2 bg-white dark:bg-dark-800 rounded-lg shadow-xl border border-gray-100 dark:border-dark-700 overflow-hidden">
+                  <div className="absolute z-10 w-full mt-1 bg-white dark:bg-dark-800 sharp shadow-xl border-2 border-gray-200 dark:border-dark-700 overflow-hidden">
                     <ul>
                       {suggestions.map((prog) => (
                         <li key={prog.id}>
                           <Link
                             to={`/programs/${prog.id}`}
-                            className="w-full text-start px-4 py-3 flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-dark-700 transition-colors"
+                            className="w-full text-start px-4 py-3 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors border-b border-gray-100 dark:border-dark-700 last:border-0"
                           >
-                            <img src={prog.image} alt="" className="w-8 h-8 rounded object-cover" />
-                            <span className="text-sm font-medium text-gray-900 dark:text-white">{prog.title[language]}</span>
+                            <img src={prog.image} alt="" className="w-8 h-8 sharp object-cover" />
+                            <span className="text-sm font-bold text-gray-900 dark:text-white">{prog.title[language]}</span>
                           </Link>
                         </li>
                       ))}
@@ -88,41 +87,47 @@ export const Programs: React.FC = () => {
         </div>
 
         {filteredPrograms.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
               {filteredPrograms.map((prog) => {
                   const isLive = prog.id === currentLiveProgramId;
                   return (
                     <Link
                         key={prog.id}
                         to={`/programs/${prog.id}`}
-                        className={`block bg-white dark:bg-dark-800 rounded-lg sm:rounded-xl shadow-sm overflow-hidden border transition-all group ${
-                            isLive ? 'ring-2 ring-red-500 border-red-500' : 'border-gray-100 dark:border-dark-700 hover:shadow-md'
+                        className={`program-card block bg-gray-50 dark:bg-dark-900 sharp overflow-hidden border-2 transition-all group ${
+                            isLive ? 'border-red-600' : 'border-gray-200 dark:border-gray-800 hover:border-primary-600'
                         }`}
                     >
-                        <div className="h-48 sm:h-56 md:h-64 overflow-hidden relative">
+                        <div className="h-56 sm:h-64 md:h-72 overflow-hidden relative">
                             <img
                                 src={prog.image}
                                 alt={prog.title[language]}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span className="bg-primary-600 text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform text-sm sm:text-base">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
+                                <span className="btn-sharp bg-primary-600 text-white px-6 py-2 font-bold uppercase text-xs tracking-wider transform translate-y-4 group-hover:translate-y-0 transition-transform">
                                     {t.programs.watchEpisodes}
                                 </span>
                             </div>
-                            
-                            {/* Now Playing Badge */}
+
+                            {/* Category Label */}
+                            <div className="absolute top-2 left-2">
+                                <span className="category-label text-[0.65rem]">{prog.category}</span>
+                            </div>
+
+                            {/* Live Indicator */}
                             {isLive && (
-                                <div className="absolute top-3 left-3 rtl:left-auto rtl:right-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 animate-pulse z-10 shadow-lg">
-                                    <Radio size={12} />
-                                    <span>{t.live.nowPlaying}</span>
+                                <div className="absolute top-2 right-2 rtl:right-auto rtl:left-2">
+                                    <div className="live-indicator bg-red-600 text-white text-xs font-bold px-3 py-1 sharp flex items-center gap-1.5">
+                                        <span>{t.live.nowPlaying}</span>
+                                    </div>
                                 </div>
                             )}
                         </div>
-                        <div className="p-5">
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center group-hover:text-primary-600 transition-colors">{prog.title[language]}</h3>
-                            <p className="text-primary-600 text-sm font-medium text-center mb-3">{prog.host[language]}</p>
-                            <p className="text-gray-500 dark:text-gray-400 text-sm text-center line-clamp-2">{prog.description[language]}</p>
+                        <div className="p-4">
+                            <h3 className="font-headline text-lg sm:text-xl font-bold uppercase dense text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">{prog.title[language]}</h3>
+                            <p className="text-primary-600 text-xs sm:text-sm font-bold uppercase tracking-wide mb-2">{prog.host[language]}</p>
+                            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm line-clamp-2">{prog.description[language]}</p>
                         </div>
                     </Link>
                   );
@@ -130,7 +135,7 @@ export const Programs: React.FC = () => {
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-gray-500 dark:text-gray-400 text-lg">{t.search.noResults}</p>
+            <p className="font-headline text-gray-400 dark:text-gray-500 text-xl uppercase">{t.search.noResults}</p>
           </div>
         )}
 

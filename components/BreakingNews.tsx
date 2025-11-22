@@ -6,21 +6,25 @@ export const BreakingNews: React.FC = () => {
   const { t, language } = useLanguage();
 
   return (
-    <div className="bg-red-600 text-white h-8 sm:h-10 flex items-center overflow-hidden relative z-40">
-      <div className="bg-red-700 h-full px-2 sm:px-3 md:px-4 flex items-center justify-center font-bold text-[0.7rem] sm:text-xs md:text-sm uppercase tracking-wider z-10 shadow-lg whitespace-nowrap">
+    <div className="bg-red-600 text-white h-9 sm:h-10 flex items-center overflow-hidden relative z-40 border-b-2 border-red-700 broadcast-bars">
+      {/* Breaking Label - Enhanced with Flash Animation */}
+      <div className="breaking-label breaking-flash h-full px-3 sm:px-4 md:px-5 flex items-center justify-center text-[0.7rem] sm:text-xs md:text-sm z-10 shadow-lg whitespace-nowrap sharp">
         {t.news.breaking}
       </div>
-      <div className="flex-1 relative overflow-hidden h-full">
+      {/* Ticker Content - Enhanced Ticker Tape Effect */}
+      <div className="flex-1 relative overflow-hidden h-full ticker-tape">
         {/* Marquee Container */}
         <div className="absolute top-0 whitespace-nowrap h-full flex items-center animate-marquee rtl:animate-marquee-rtl">
-          {mockNews.map((news) => (
-            <span key={news.id} className="mx-4 sm:mx-6 md:mx-8 text-xs sm:text-sm font-medium">
-              {news.title[language]} <span className="mx-1 sm:mx-2 text-red-300">|</span>
+          {mockNews.map((news, index) => (
+            <span key={news.id} className="mx-6 sm:mx-8 md:mx-10 text-xs sm:text-sm font-bold tracking-wide">
+              <span className="ticker-number">{String(index + 1).padStart(2, '0')}</span>
+              {news.title[language]}
             </span>
           ))}
-           {mockNews.map((news) => (
-            <span key={`${news.id}-dup`} className="mx-4 sm:mx-6 md:mx-8 text-xs sm:text-sm font-medium">
-              {news.title[language]} <span className="mx-1 sm:mx-2 text-red-300">|</span>
+           {mockNews.map((news, index) => (
+            <span key={`${news.id}-dup`} className="mx-6 sm:mx-8 md:mx-10 text-xs sm:text-sm font-bold tracking-wide">
+              <span className="ticker-number">{String(index + 1).padStart(2, '0')}</span>
+              {news.title[language]}
             </span>
           ))}
         </div>

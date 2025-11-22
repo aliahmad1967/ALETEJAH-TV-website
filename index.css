@@ -1,4 +1,7 @@
-/* Additional custom styles can be added here if needed */
+/* ============================================
+   ALETEJAH TV - Professional News Network CSS
+   Sharp, Dense, High-Contrast Design System
+   ============================================ */
 
 /* Reset and prevent overflow */
 *,
@@ -100,4 +103,387 @@ video,
 iframe {
   max-width: 100%;
   height: auto;
+}
+
+/* ============================================
+   PROFESSIONAL NEWS NETWORK TYPOGRAPHY
+   ============================================ */
+
+/* Oswald for headlines - punchy and impactful */
+.headline,
+h1, h2, h3 {
+  font-family: 'Oswald', 'Cairo', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* Body text remains readable */
+body {
+  font-family: 'Inter', 'Cairo', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   SHARP DESIGN SYSTEM - NO ROUNDED CORNERS
+   ============================================ */
+
+/* Override Tailwind's default rounded corners for news aesthetic */
+.news-card,
+.news-item,
+.program-card {
+  border-radius: 0 !important;
+}
+
+/* Sharp buttons for CTAs */
+.btn-sharp {
+  border-radius: 0;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+/* ============================================
+   HIGH CONTRAST & VISUAL HIERARCHY
+   ============================================ */
+
+/* Live indicator - pulsing red dot */
+.live-indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.live-indicator::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
+/* Category labels - sharp and bold */
+.category-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0;
+  background: #ef4444;
+  color: white;
+  display: inline-block;
+}
+
+/* Breaking news label */
+.breaking-label {
+  background: #dc2626;
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: flash 2s ease-in-out infinite;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* ============================================
+   DENSE INFORMATION LAYOUT
+   ============================================ */
+
+/* Mosaic grid for hero section */
+.mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 2px;
+  background: #000;
+}
+
+.mosaic-main {
+  grid-column: 1 / 9;
+  grid-row: 1 / 7;
+}
+
+.mosaic-side-1 {
+  grid-column: 9 / 13;
+  grid-row: 1 / 3;
+}
+
+.mosaic-side-2 {
+  grid-column: 9 / 13;
+  grid-row: 3 / 5;
+}
+
+.mosaic-side-3 {
+  grid-column: 9 / 13;
+  grid-row: 5 / 7;
+}
+
+/* Mobile mosaic - stack vertically */
+@media (max-width: 768px) {
+  .mosaic-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 1px;
+  }
+
+  .mosaic-main {
+    grid-column: 1;
+    grid-row: auto;
+    min-height: 400px;
+  }
+
+  .mosaic-side-1,
+  .mosaic-side-2,
+  .mosaic-side-3 {
+    grid-column: 1;
+    grid-row: auto;
+    min-height: 200px;
+  }
+}
+
+/* ============================================
+   NEWS CARD STYLING - SHARP & DENSE
+   ============================================ */
+
+.news-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+  transition: background 0.3s ease;
+}
+
+.news-card:hover .news-card-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+/* Timestamp styling */
+.timestamp {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+/* ============================================
+   DARK MODE OPTIMIZATION
+   ============================================ */
+
+.dark .news-card-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 50%, transparent 100%);
+}
+
+.dark .category-label {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Sharp edges utility */
+.sharp {
+  border-radius: 0 !important;
+}
+
+/* Dense spacing */
+.dense {
+  line-height: 1.2;
+}
+
+/* High contrast text */
+.high-contrast {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* ============================================
+   ADVANCED BROADCAST FEATURES
+   ============================================ */
+
+/* Broadcast ticker tape effect */
+.ticker-tape {
+  background: linear-gradient(90deg, #000 0%, #1a1a1a 50%, #000 100%);
+  border-top: 2px solid #ef4444;
+  border-bottom: 2px solid #ef4444;
+  position: relative;
+  overflow: hidden;
+}
+
+.ticker-tape::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: ticker-shine 3s infinite;
+}
+
+@keyframes ticker-shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Enhanced live pulse animation */
+@keyframes pulse-red-enhanced {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.live-indicator-enhanced::before {
+  animation: pulse-red-enhanced 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Broadcast bars (decorative) */
+.broadcast-bars {
+  position: relative;
+}
+
+.broadcast-bars::before,
+.broadcast-bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 50%, #ef4444 100%);
+}
+
+.broadcast-bars::before {
+  top: 0;
+}
+
+.broadcast-bars::after {
+  bottom: 0;
+}
+
+/* News ticker number counter */
+.ticker-number {
+  display: inline-block;
+  background: #ef4444;
+  color: white;
+  padding: 2px 6px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 0.7rem;
+  margin-right: 8px;
+  border-radius: 0;
+}
+
+/* Breaking news flash effect */
+@keyframes breaking-flash {
+  0%, 100% {
+    background-color: #ef4444;
+  }
+  50% {
+    background-color: #dc2626;
+  }
+}
+
+.breaking-flash {
+  animation: breaking-flash 1s ease-in-out infinite;
+}
+
+/* TV scan line effect (subtle) */
+.tv-scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+.tv-scanline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  animation: scanline 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Professional time display */
+.broadcast-time {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  background: #000;
+  color: #ef4444;
+  padding: 4px 8px;
+  border: 1px solid #ef4444;
+  border-radius: 0;
+}
+
+/* Signal strength indicator */
+.signal-indicator {
+  display: inline-flex;
+  gap: 2px;
+  align-items: flex-end;
+}
+
+.signal-bar {
+  width: 3px;
+  background: #10b981;
+  border-radius: 0;
+}
+
+.signal-bar:nth-child(1) { height: 6px; }
+.signal-bar:nth-child(2) { height: 10px; }
+.signal-bar:nth-child(3) { height: 14px; }
+.signal-bar:nth-child(4) { height: 18px; }
+
+/* Broadcast quality badge */
+.quality-badge {
+  background: #000;
+  color: #fff;
+  border: 2px solid #ef4444;
+  padding: 2px 8px;
+  font-size: 0.65rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  border-radius: 0;
+}
+
+/* Button sharp style */
+.btn-sharp {
+  border-radius: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
