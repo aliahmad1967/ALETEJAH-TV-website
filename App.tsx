@@ -1,16 +1,15 @@
-import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { BreakingNews } from './components/BreakingNews';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { Contact } from './pages/Contact';
 import { Home } from './pages/Home';
 import { Live } from './pages/Live';
 import { News } from './pages/News';
-import { Programs } from './pages/Programs';
 import { ProgramDetails } from './pages/ProgramDetails';
+import { Programs } from './pages/Programs';
 import { Schedule } from './pages/Schedule';
-import { Contact } from './pages/Contact';
 
 function App() {
   return (
