@@ -1,6 +1,6 @@
+import { Facebook, Instagram, Mail, MapPin, Phone, Twitter, Youtube } from 'lucide-react';
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { t } = useLanguage();
@@ -12,13 +12,7 @@ export const Footer: React.FC = () => {
           {/* About - Sharp Professional Design */}
           <div className="col-span-1 sm:col-span-2 md:col-span-1">
             <div className="flex items-center gap-3 mb-6 text-white">
-                <div className="bg-primary-600 sharp p-2">
-                  <ArrowUpRight size={24} strokeWidth={3} />
-                </div>
-                <div className="flex flex-col">
-                    <h3 className="font-headline text-2xl font-bold leading-none uppercase">ALETEJAH</h3>
-                    <span className="text-[0.65rem] text-primary-400 uppercase tracking-wider mt-1 font-bold">One Direction for Truth</span>
-                </div>
+                <img src="/logo.png" alt="Aletejah TV" className="h-16 w-auto object-contain brightness-0 invert" />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
               {t.footer.rights}

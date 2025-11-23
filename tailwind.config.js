@@ -16,26 +16,26 @@ export default {
       },
       colors: {
         primary: {
-          50: '#f0f8ff',
-          100: '#e0f0fe',
-          200: '#bae2fd',
-          300: '#7ccdfd',
-          400: '#36b8fa',
-          500: '#0066cc', // Lighter accessible blue for buttons
-          600: '#003366', // Deep Brand Blue
-          700: '#002b56',
-          800: '#002346',
-          900: '#001a36',
+          50: '#eef4ff',
+          100: '#d9e6ff',
+          200: '#bcd4ff',
+          300: '#8ebaff',
+          400: '#599aff',
+          500: '#2d7aff',
+          600: '#1a56db', // Standard Blue
+          700: '#1e40af', // Deep Blue (Al Jazeera-like)
+          800: '#1e3a8a', // Darker Blue
+          900: '#172554', // Navy
         },
         accent: {
-          400: '#ffe066',
-          500: '#FFD700', // Gold
-          600: '#e6c200',
+          400: '#fbbf24',
+          500: '#f59e0b', // Gold
+          600: '#d97706', // Dark Gold
         },
         dark: {
-          900: '#0b1121', // Deep blue-black
-          800: '#152036', // Deep blue-grey
-          700: '#263550',
+          900: '#0f172a', // Slate 900
+          800: '#1e293b', // Slate 800
+          700: '#334155', // Slate 700
         }
       },
       fontFamily: {

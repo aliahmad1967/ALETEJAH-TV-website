@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Menu, X, Globe, Moon, Sun, Radio, Search, ChevronRight, ChevronLeft, Facebook, Twitter, Youtube, Instagram, Calendar } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Facebook, Globe, Instagram, Menu, Moon, Search, Sun, Twitter, X, Youtube } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { mockNews, mockPrograms } from '../constants';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export const Header: React.FC = () => {
   const { language, setLanguage, t, dir } = useLanguage();
@@ -122,18 +122,7 @@ export const Header: React.FC = () => {
               {/* Logo - Sharp & Bold */}
               <div className="flex-shrink-0 flex items-center min-w-0">
                 <NavLink to="/" className="flex items-center gap-2 sm:gap-3 group">
-                  <div className="bg-primary-600 text-white p-2 sharp group-hover:bg-primary-700 transition-colors flex-shrink-0">
-                    <Radio size={20} className="sm:hidden" strokeWidth={2.5} />
-                    <Radio size={24} className="hidden sm:block" strokeWidth={2.5} />
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <span className="font-headline text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-none text-gray-900 dark:text-white">
-                      {language === 'en' ? 'ALETEJAH' : 'الاتجاه'}
-                    </span>
-                    <span className="text-[0.6rem] sm:text-[0.65rem] font-bold text-primary-600 dark:text-accent-500 tracking-widest uppercase hidden xs:block">
-                      {language === 'en' ? 'NEWS NETWORK' : 'شبكة الأخبار'}
-                    </span>
-                  </div>
+                  <img src="/logo.png" alt="Aletejah TV" className="h-10 sm:h-12 w-auto object-contain" />
                 </NavLink>
               </div>
 
