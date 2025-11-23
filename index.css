@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ============================================
    ALETEJAH TV - Professional News Network CSS
    Sharp, Dense, High-Contrast Design System
