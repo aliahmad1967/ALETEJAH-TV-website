@@ -1,5 +1,6 @@
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+   <img components/screencapture-aletejah-tv-website-vercel-app-2025-11-23-13_48_51.png/>
 </div>
 
 ## Run Locally
